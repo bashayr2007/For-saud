@@ -18,13 +18,11 @@
             overflow: hidden;
             position: relative;
         }
-
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.4);
@@ -34,55 +32,26 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 10;
         }
-
-        .heart {
-            font-size: 80px;
-            animation: pulse 1.5s infinite;
-            margin-bottom: 15px;
-        }
-
+        .heart { font-size: 80px; animation: pulse 1.5s infinite; margin-bottom: 15px; }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-
-        h1 {
-            color: #880e4f;
-            margin: 0;
-            font-size: 30px;
-        }
-
-        .timer {
-            font-size: 22px;
-            margin-top: 20px;
-            color: #ad1457;
-            font-weight: bold;
-            direction: ltr;
-        }
-
-        .falling-heart {
-            position: absolute;
-            font-size: 20px;
-            user-select: none;
-            animation: fall linear infinite;
-            top: -20px;
-            z-index: 1;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
-        }
+        h1 { color: #880e4f; margin: 0; font-size: 28px; }
+        .timer { font-size: 22px; margin-top: 20px; color: #ad1457; font-weight: bold; direction: ltr; }
+        .message { font-size: 16px; margin-top: 25px; color: #880e4f; line-height: 1.6; max-width: 260px; margin-left: auto; margin-right: auto; font-weight: 500; }
+        .falling-heart { position: absolute; font-size: 20px; user-select: none; animation: fall linear infinite; top: -20px; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="heart">💕</div>
         <h1>أحبك سعود 🩷</h1>
         <div id="timer" class="timer">Loading...</div>
+        <p class="message">هذا أول موقع ابنيه وحبيت أعبر عن حبي لك فيه، لأن كل حاجة تفرحني تذكرني فيك</p>
     </div>
-
     <script>
         function updateTimer() {
             const startDate = new Date('2025-07-21T00:00:00');
@@ -92,23 +61,100 @@
             const hours = Math.floor((diff % 86400000) / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
-            document.getElementById('timer').innerHTML = 
-                days + " Days<br>" + hours + "h " + minutes + "m " + seconds + "s";
+            document.getElementById('timer').innerHTML = days + " Days<br>" + hours + "h " + minutes + "m " + seconds + "s";
         }
         setInterval(updateTimer, 1000);
         updateTimer();
-
         function createFallingHeart() {
             const heart = document.createElement('div');
             heart.classList.add('falling-heart');
             heart.innerHTML = '💕';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            heart.style.fontSize = Math.random() * 10 + 15 + 'px';
             document.body.appendChild(heart);
             setTimeout(() => { heart.remove(); }, 6000);
         }
-        setInterval(createFallingHeart, 300); is
+        setInterval(createFallingHeart, 300);
+    </script>
+</body>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Gift for Saud</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #fce4ec, #f8bbd0, #f48fb1);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .heart { font-size: 80px; animation: pulse 1.5s infinite; margin-bottom: 15px; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        h1 { color: #880e4f; margin: 0; font-size: 28px; }
+        .timer { font-size: 22px; margin-top: 20px; color: #ad1457; font-weight: bold; direction: ltr; }
+        .message { font-size: 16px; margin-top: 25px; color: #880e4f; line-height: 1.6; max-width: 260px; margin-left: auto; margin-right: auto; font-weight: 500; }
+        .falling-heart { position: absolute; font-size: 20px; user-select: none; animation: fall linear infinite; top: -20px; z-index: 1; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">💕</div>
+        <h1>أحبك سعود 🩷</h1>
+        <div id="timer" class="timer">Loading...</div>
+        <p class="message">هذا أول موقع ابنيه وحبيت أعبر عن حبي لك فيه، لأن كل حاجة تفرحني تذكرني فيك</p>
+    </div>
+    <script>
+        function updateTimer() {
+            const startDate = new Date('2025-07-21T00:00:00');
+            const now = new Date();
+            const diff = now - startDate;
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            document.getElementById('timer').innerHTML = days + " Days<br>" + hours + "h " + minutes + "m " + seconds + "s";
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '💕';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createFallingHeart, 300);
     </script>
 </body>
 </html>
