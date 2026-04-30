@@ -45,6 +45,7 @@
         .timer { font-size: 20px; margin-top: 15px; color: #ad1457; font-weight: bold; direction: ltr; }
         .message-outside { font-size: 13px; margin-top: 25px; color: #880e4f; text-align: center; max-width: 280px; z-index: 10; line-height: 1.5; opacity: 0.9; }
 
+        /* زر الموسيقى */
         #music-btn {
             position: fixed;
             top: 20px;
@@ -72,7 +73,7 @@
     <button id="music-btn" onclick="togglePlay()">🎵</button>
     
     <audio id="main-audio" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+        <source src="https://www.mboxdrive.com/Brent%20Faiyaz%20-%20ALL%20MINE%20(Official%20Video).mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -91,14 +92,17 @@
             if (audio.paused) {
                 audio.play().then(() => {
                     btn.innerHTML = "🔇";
-                }).catch(e => alert("اضغط مرة ثانية لتشغيل الصوت"));
+                }).catch(e => {
+                    // في حال تطلب المتصفح ضغطة إضافية
+                    alert("اضغط مرة أخرى لتشغيل الأغنية 🎵");
+                });
             } else {
                 audio.pause();
                 btn.innerHTML = "🎵";
             }
         }
 
-        // كود العداد
+        // كود العداد (تاريخ البداية: 21 يوليو 2025)
         const startDate = new Date('2025-07-21T00:00:00');
         function updateTimer() {
             const now = new Date();
@@ -112,7 +116,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // كود القلوب
+        // كود القلوب المتساقطة
         function createDecoration() {
             const dec = document.createElement('div');
             dec.classList.add('decoration');
