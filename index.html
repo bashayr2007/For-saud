@@ -46,23 +46,23 @@
         .timer { font-size: 20px; margin-top: 15px; color: #ad1457; font-weight: bold; direction: ltr; }
         .message-outside { font-size: 13px; margin-top: 25px; color: #880e4f; text-align: center; max-width: 280px; z-index: 10; line-height: 1.5; opacity: 0.9; }
 
-        /* زر الموسيقى بشكل أوضح */
-        #music-control {
+        /* زر الموسيقى المعدل */
+        #music-btn {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 100;
             background: white;
+            border: none;
             width: 45px;
             height: 45px;
             border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 22px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: none;
         }
 
         .decoration { position: absolute; user-select: none; animation: fall linear infinite; top: -20px; z-index: 1; }
@@ -71,9 +71,11 @@
 </head>
 <body>
 
-    <button id="music-control" onclick="toggleMusic()">🎵</button>
+    <button id="music-btn" onclick="playMusic()">🎵</button>
     
-    <div id="youtube-player"></div>
+    <audio id="myAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
 
     <div class="container">
         <div class="heart">💕</div>
@@ -84,46 +86,21 @@
     <p class="message-outside">هذا أول موقع ابنيه وحبيت أعبر عن حبي لك فيه، لأن كل حاجة تفرحني تذكرني فيك</p>
 
     <script>
-        // إعداد مشغل يوتيوب
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var audio = document.getElementById("myAudio");
+        var btn = document.getElementById("music-btn");
 
-        var player;
-        var isReady = false;
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 's07pXUf8sV8', // ID أغنية All Mine
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'modestbranding': 1,
-                    'loop': 1
-                },
-                events: {
-                    'onReady': function() { isReady = true; }
-                }
-            });
-        }
-
-        function toggleMusic() {
-            if (!isReady) return;
-            
-            var state = player.getPlayerState();
-            if (state == YT.PlayerState.PLAYING) {
-                player.pauseVideo();
-                document.getElementById('music-control').innerHTML = "🔇";
+        function playMusic() {
+            if (audio.paused) {
+                audio.play().catch(function(error) {
+                    console.log("التحميل فشل أو المتصفح منع التشغيل: " + error);
+                });
+                btn.innerHTML = "🔇";
             } else {
-                player.playVideo();
-                document.getElementById('music-control').innerHTML = "🎵";
+                audio.pause();
+                btn.innerHTML = "🎵";
             }
         }
 
-        // باقي كود العداد والزينة
         const startDate = new Date('2025-07-21T00:00:00');
         let isAnniversary = false;
 
