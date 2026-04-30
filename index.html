@@ -9,7 +9,7 @@
             margin: 0;
             height: 100vh;
             display: flex;
-            flex-direction: column; /* ترتيب العناصر عمودياً */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: linear-gradient(45deg, #fce4ec, #f8bbd0, #f48fb1);
@@ -32,8 +32,8 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 10;
-            width: 80%;
-            max-width: 300px;
+            width: 85%;
+            max-width: 320px;
         }
         .heart { font-size: 70px; animation: pulse 1.5s infinite; margin-bottom: 10px; }
         @keyframes pulse {
@@ -41,29 +41,30 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        h1 { color: #880e4f; margin: 0; font-size: 26px; }
+        h1 { color: #880e4f; margin: 0; font-size: 26px; transition: all 0.5s ease; }
+        .anniversary-text { color: #d4af37; font-size: 24px; font-weight: bold; }
         .timer { font-size: 20px; margin-top: 15px; color: #ad1457; font-weight: bold; direction: ltr; }
         
-        /* تنسيق الجملة برا الصندوق */
         .message-outside { 
-            font-size: 13px; /* خط صغير */
-            margin-top: 25px; /* مسافة تحت الصندوق */
+            font-size: 13px; 
+            margin-top: 25px; 
             color: #880e4f; 
-            text-align: center;
-            max-width: 280px;
-            z-index: 10;
-            line-height: 1.5;
-            opacity: 0.9;
+            text-align: center; 
+            max-width: 280px; 
+            z-index: 10; 
+            line-height: 1.5; 
+            opacity: 0.9; 
         }
 
-        .falling-heart { position: absolute; font-size: 20px; user-select: none; animation: fall linear infinite; top: -20px; z-index: 1; }
+        .decoration { position: absolute; user-select: none; animation: fall linear infinite; top: -20px; z-index: 1; }
         @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
     </style>
 </head>
 <body>
+
     <div class="container">
         <div class="heart">💕</div>
-        <h1>أحبك سعود 🩷</h1>
+        <h1 id="main-title">أحبك سعود 💕</h1>
         <div id="timer" class="timer">Loading...</div>
     </div>
 
@@ -78,21 +79,35 @@
             const hours = Math.floor((diff % 86400000) / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
+            
             document.getElementById('timer').innerHTML = days + " Days<br>" + hours + "h " + minutes + "m " + seconds + "s";
+
+            const title = document.getElementById('main-title');
+            // إذا كان اليوم هو يوم الذكرى السنوية بالضبط (365)
+            if (days === 365) {
+                title.innerHTML = "Our First Anniversary ✨";
+                title.className = "anniversary-text";
+            } else {
+                // في أي يوم آخر يرجع للوضع الطبيعي
+                title.innerHTML = "أحبك سعود 💕";
+                title.className = ""; 
+            }
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        function createFallingHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('falling-heart');
-            heart.innerHTML = '💕';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 6000);
+        function createDecoration() {
+            const dec = document.createElement('div');
+            dec.classList.add('decoration');
+            const items = ['💕', '✨', '🌸', '🎊', '💗'];
+            dec.innerHTML = items[Math.floor(Math.random() * items.length)];
+            dec.style.left = Math.random() * 100 + 'vw';
+            dec.style.animationDuration = Math.random() * 3 + 4 + 's';
+            dec.style.fontSize = Math.random() * 10 + 15 + 'px';
+            document.body.appendChild(dec);
+            setTimeout(() => { dec.remove(); }, 6000);
         }
-        setInterval(createFallingHeart, 300);
+        setInterval(createDecoration, 300);
     </script>
 </body>
 </html>
