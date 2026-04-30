@@ -41,11 +41,11 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        h1 { color: #880e4f; margin: 0; font-size: 26px; }
+        h1 { color: #880e4f; margin: 0; font-size: 26px; transition: all 0.5s ease; }
+        .anniversary-title { color: #d4af37 !important; font-weight: bold; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
         .timer { font-size: 20px; margin-top: 15px; color: #ad1457; font-weight: bold; direction: ltr; }
         .message-outside { font-size: 13px; margin-top: 25px; color: #880e4f; text-align: center; max-width: 280px; z-index: 10; line-height: 1.5; opacity: 0.9; }
 
-        /* زر الموسيقى */
         #music-btn {
             position: fixed;
             top: 20px;
@@ -73,11 +73,11 @@
     <button id="music-btn" onclick="togglePlay()">🎵</button>
     
     <audio id="main-audio" loop preload="auto">
-        <source src="https://www.mboxdrive.com/Brent%20Faiyaz%20-%20ALL%20MINE%20(Official%20Video).mp3" type="audio/mpeg">
+        <source src="https://dl.dropboxusercontent.com/scl/fi/v650it455m3u994r5v81p/Brent-Faiyaz-ALL-MINE.mp3?rlkey=5n0c7499t9z6i80j5993n7o8y&dl=0" type="audio/mpeg">
     </audio>
 
     <div class="container">
-        <div class="heart">💕</div>
+        <div class="heart" id="heart-icon">💕</div>
         <h1 id="main-title">أحبك سعود 💕</h1>
         <div id="timer" class="timer">Loading...</div>
     </div>
@@ -87,23 +87,19 @@
     <script>
         var audio = document.getElementById("main-audio");
         var btn = document.getElementById("music-btn");
+        var isAnniversary = false;
 
         function togglePlay() {
             if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerHTML = "🔇";
-                }).catch(e => {
-                    // في حال تطلب المتصفح ضغطة إضافية
-                    alert("اضغط مرة أخرى لتشغيل الأغنية 🎵");
-                });
+                audio.play().then(_ => { btn.innerHTML = "🔇"; }).catch(e => { console.log("Play failed"); });
             } else {
                 audio.pause();
                 btn.innerHTML = "🎵";
             }
         }
 
-        // كود العداد (تاريخ البداية: 21 يوليو 2025)
         const startDate = new Date('2025-07-21T00:00:00');
+
         function updateTimer() {
             const now = new Date();
             const diff = now - startDate;
@@ -111,16 +107,43 @@
             const hours = Math.floor((diff % 86400000) / 3600000);
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
+            
             document.getElementById('timer').innerHTML = days + " Days<br>" + hours + "h " + minutes + "m " + seconds + "s";
+
+            const title = document.getElementById('main-title');
+            const heart = document.getElementById('heart-icon');
+            
+            // شرط السنوية: إذا كملتوا 365 يوم أو أكثر
+            if (days >= 365) {
+                isAnniversary = true;
+                title.innerHTML = "Happy 1st Anniversary Saud! ✨";
+                title.classList.add('anniversary-title');
+                heart.innerHTML = "✨💖✨";
+            } else {
+                isAnniversary = false;
+                title.innerHTML = "أحبك سعود 💕";
+                title.classList.remove('anniversary-title');
+                heart.innerHTML = "💕";
+            }
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // كود القلوب المتساقطة
         function createDecoration() {
             const dec = document.createElement('div');
             dec.classList.add('decoration');
-            dec.innerHTML = '💕';
+            
+            // المنطق الجديد للزينة:
+            let items;
+            if (isAnniversary) {
+                // إذا كملتوا سنة: قلوب + نجوم + ورد + احتفال
+                items = ['💕', '✨', '🌸', '🎊', '💗', '⭐'];
+            } else {
+                // الوضع العادي الحين: قلوب فقط
+                items = ['💕', '💗', '💖'];
+            }
+            
+            dec.innerHTML = items[Math.floor(Math.random() * items.length)];
             dec.style.left = Math.random() * 100 + 'vw';
             dec.style.animationDuration = Math.random() * 3 + 4 + 's';
             dec.style.fontSize = Math.random() * 10 + 15 + 'px';
